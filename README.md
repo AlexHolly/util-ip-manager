@@ -3,7 +3,7 @@
 1. Clone this project
 2. ```cd [projectfolder]```
 3. ```sbt publish-local```
-4. Go to your project build.sbt and add ```"de.alexholly.util" %% "ip-manager" % "0.0.1-SNAPSHOT"```
+4. Go to your project build.sbt and add ```"de.alexholly.util" %% "ip-manager" % "0.0.2-SNAPSHOT"```
 
 # Imports
 	
