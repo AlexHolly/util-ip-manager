@@ -14,19 +14,19 @@ import scala.collection.JavaConversions._
 object IPManager {
 
   //TESTS
-  //  def main(args: Array[String]) {
-  //
-  //    //      println(IPManager.isIP("128.0.0.1"))
-  //    //      println(IPManager.isIP("127.0.0.2"))
-  //    //      println(IPManager.isIP("128.0.0.2"))
-  //    //    println(IPManager.isIP("127.0.0.0"))
-  //    println(IPManager.getLocalIP())
-  //    println(IPManager.getInternetIP())
-  //  }
+//  def main(args: Array[String]) {
+//
+//    //      println(IPManager.isIP("128.0.0.1"))
+//    //      println(IPManager.isIP("127.0.0.2"))
+//    //      println(IPManager.isIP("128.0.0.2"))
+//    //    println(IPManager.isIP("127.0.0.0"))
+//    //      println(IPManager.getLocalIP())
+//    println(IPManager.getInternetIP())
+//  }
 
   //////////////////////////////////////////////////////////
-  
-//TODO muss oberservable sein fuer UI
+
+  //TODO muss oberservable sein fuer UI
   var ips: List[String] = new ArrayList[String]()
 
   initIPS()
@@ -68,15 +68,23 @@ object IPManager {
   }
 
   /*
-   * Quelle: http://natip.tuxnet24.de/
-   * 		 http://natip.tuxnet24.de/index.php?mode=xml
-   * 
+   * 		 First try, http://natip.tuxnet24.de/index.php?mode=xml
+   * 		 Second, https://api.ipify.org/?format=json
+   * 		 else returns your public ip if any errors you get "127.0.0.1"
    */
   def getInternetIP(): String = {
-    val source = Source.fromURL(new URL("http://natip.tuxnet24.de/index.php?mode=xml"))
-    val node = XML.loadString(source.mkString)
-    var internetIP = (node \ "ip-address").text
-    return internetIP
+    try {
+      val source = Source.fromURL(new URL("http://natip.tuxnet24.de/index.php?mode=xml"))
+      val node = XML.loadString(source.mkString)
+      var internetIP = (node \ "ip-address").text
+      return internetIP
+    } catch {
+      case e: Throwable =>
+        val source = Source.fromURL(new URL("https://api.ipify.org/?format=xml"))
+        var internetIP = source.mkString
+        return internetIP
+    }
+    return "127.0.0.1"
   }
 
 }
