@@ -8,3 +8,16 @@
 # Imports
 	
 ```import de.alexholly.util.IPManager```
+
+# Methods
+
+getAllIPs() : List[String]
+
+getHostname(): String
+
+getLocalIP(): String
+
+isIPv4(ip: String): Boolean
+
+getInternetIP(): String 
+
