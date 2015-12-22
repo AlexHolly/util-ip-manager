@@ -16,10 +16,10 @@ object IPManager {
   //TESTS
 //  def main(args: Array[String]) {
 //
-//    //      println(IPManager.isIP("128.0.0.1"))
-//    //      println(IPManager.isIP("127.0.0.2"))
-//    //      println(IPManager.isIP("128.0.0.2"))
-//    //    println(IPManager.isIP("127.0.0.0"))
+//    //      println(IPManager.isIPv4("128.0.0.1"))
+//    //      println(IPManager.isIPv4("127.0.0.2"))
+//    //      println(IPManager.isIPv4("128.0.0.2"))
+//    //    println(IPManager.isIPv4("127.0.0.0"))
 //    //      println(IPManager.getLocalIP())
 //    println(IPManager.getInternetIP())
 //  }
@@ -34,7 +34,7 @@ object IPManager {
     NetworkInterface.getNetworkInterfaces().foreach { networkInterface =>
       networkInterface.getInetAddresses.foreach { ipp =>
         val ip = ipp.getHostAddress().toString()
-        if (isIP(ip.toString())) {
+        if (isIPv4(ip.toString())) {
           ips.add(ip.toString())
         }
       }
@@ -56,14 +56,14 @@ object IPManager {
 
   def getLocalIP(): String = {
     ips.foreach { ip =>
-      if (isIP(ip) && !(ip.startsWith("127") || ip.endsWith(".1"))) {
+      if (isIPv4(ip) && !(ip.startsWith("127") || ip.endsWith(".1"))) {
         return ip
       }
     }
     return null
   }
 
-  def isIP(ip: String): Boolean = {
+  def isIPv4(ip: String): Boolean = {
     ip.matches("[1-9][0-9]+.[0-9]+.[0-9]+.[0-9]+")
   }
 
